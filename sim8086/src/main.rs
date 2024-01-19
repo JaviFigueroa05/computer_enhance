@@ -13,24 +13,20 @@ fn main() {
     let bytes = fs::read(path).unwrap();
     let mut i = 0;
     while i < bytes.len() {
-        let byte_1 = bytes[i+1];
-        let byte_2 = bytes[i];
+        let byte_1 = bytes[i];
+        let byte_2 = bytes[i+1];
 
-        let op_code = byte_1 >> 2;
-        let direction = (byte_1 & 0b00000010) >> 1;
+        let _op_code = byte_1 >> 2;
+        let _direction = (byte_1 & 0b00000010) >> 1;
         let wide = byte_1 & 0b00000001;
-        // println!("{:x}{:x}", byte_1, byte_2);
-        // println!("op_code:\t{:b}", op_code);
-        // println!("direction:\t{:b}", direction);
-        // println!("wide:\t{:b}", wide);
 
-        let mode = byte_2 >> 6;
-        let reg_1 = (byte_2 & 0b00111000) >> 3;
-        let reg_2 = byte_2 & 0b00000111;
-        let reg_1_str = register_decoder(reg_1, wide);
-        let reg_2_str = register_decoder(reg_2, wide);
+        let _mode = byte_2 >> 6;
+        let reg = (byte_2 & 0b00111000) >> 3;
+        let reg_mem = byte_2 & 0b00000111;
+        let reg_str = register_decoder(reg, wide);
+        let reg_mem_str = register_decoder(reg_mem, wide);
 
-        println!("{}, {}", reg_1_str, reg_2_str);
+        println!("mov {}, {}", reg_mem_str, reg_str);
         i += 2;
     }
 }
